@@ -45,9 +45,9 @@ Rovers effectively allow for a “rebundled” DeFi experience as users would be
 
 This new architecture leads to significant advantages, as detailed in Fig. 1.
 
-**<p align="center"> Fig. 1: Classic C2C Lending vs. Mars v2 C2C Lending</p>**
-
 ![Classic C2C Lending vs. Mars v2 C2C Lending](./images/fig-1.png)
+
+**<p align="center"> Fig. 1: Classic C2C Lending vs. Mars v2 C2C Lending</p>**
 
 To achieve this vision, the Mars smart contracts must deploy on a highly performant, decentralised platform offering a thriving DeFi ecosystem with many potential integrations and demand for leverage. 
 
@@ -55,9 +55,9 @@ There are a few Cosmos chains which fulfil these requirements and have a chance 
 
 This is the rationale that underpins the Mars Hub and Outpost topology, which is illustrated below in Fig. 2. Each outpost is an integrated DeFi experience native to a specific chain which connects to the Mars Hub - a Cosmos SDK chain.<a href="#note1" id="note1ref"><sup>1</sup></a>
 
-<p style="text-align: center; font-weight: bold">Fig. 2: Mars’ “hub and spoke” architecture</p>
-
 ![Mars’ “hub and spoke” architecture](./images/fig-2.png)
+
+**<p align="center">Fig. 2: Mars’ “hub and spoke” architecture</p>**
 
 The Hub itself does not hold liquidity for outposts but rather administers activity that occurs on its outposts. Specifically, it governs all outpost smart contracts, receives fees from outposts and distributes them to participants in Mars’ governance. In this way, Mars Hub acts like a fast food franchiser: establishing standards but leaving interaction with customers to individual franchise restaurants. Similarly, traders and yield seekers who aren’t interested in governance will be unlikely to interact with the Hub. Instead, the Hub serves as a coordination mechanism in the background, while traders interact directly with the liquidity aggregated on each of the Mars outposts.
 
@@ -69,9 +69,10 @@ Ultimately, credit accounts act as a wrapper for numerous on-chain positions a u
 
 Fig. 3 outlines an example of the DeFi subaccount experience on Mars v2.
 
-<p style="text-align: center; font-weight: bold">Fig. 3: Rover credit account user journey</p>
-
 ![Rover credit account user journey](./images/fig-3.png)
+
+**<p align="center">Fig. 3: Rover credit account user journey</p>**
+
 
 Mars Hub and its outposts work together to enable this functionality. They, in turn, are governed by the Martian Council, which is composed of MARS stakers and validators. Stakers put skin in the game by allowing their tokens to be used by validators who engage in Proof of Stake (PoS) block production/validation on Mars Hub and participate in governance in exchange for a share of the protocol revenues, which are derived in part from borrowing fees.
 
@@ -95,9 +96,9 @@ Each deployment of the Red Bank for a given outpost is comprised of the followin
 
 Fig. 4 illustrates the stakeholders and value flows in the Red Bank.
 
-<p style="text-align: center; font-weight: bold">Fig. 4: Red Bank Stakeholders</p>
-
 ![Red Bank Stakeholders](./images/fig-4.png)
+
+**<p align="center">Fig. 4: Red Bank Stakeholders</p>**
 
 Multiple outposts can be established – all of which are coordinated by Mars Hub and governed by the Martian Council.
 
@@ -113,21 +114,21 @@ Since Mars is designed to be asset-agnostic — and able to support any native C
 
 The following figures illustrate collateralised borrowing and how loan-to-value and margin maintenance work with volatile assets.
 
-<p style="text-align: center; font-weight: bold">Fig. 5: Borrowing volatile assets with stablecoin collateral</p>
-
 ![Borrowing volatile assets with stablecoin collateral](./images/fig-5.png)
 
-<p style="text-align: center; font-weight: bold">Fig. 6: Borrowing stablecoin assets with volatile collateral</p>
+**<p align="center">Fig. 5: Borrowing volatile assets with stablecoin collateral</p>**
 
 ![Borrowing stablecoin assets with volatile collateral](./images/fig-6.png)
+
+**<p align="center">Fig. 6: Borrowing stablecoin assets with volatile collateral</p>**
 
 ### 3.2 Interest Rate Model
 
 The Red Bank operates with a standard two-slope interest rate model (see Fig. 7). Pioneered by [Aave](https://github.com/aave/aave-protocol/blob/master/docs/Aave_Protocol_Whitepaper_v1_0.pdf) and [Compound](https://compound.finance/documents/Compound.Whitepaper.pdf), this model is battle-tested and widely used throughout DeFi. It works by targeting a certain utilisation rate (amount borrowed / amount deposited). Then, a curve is derived and implemented that aims to discourage utilisation past the optimal level by a sharply increasing slope, i.e. a sharply increasing interest rate.
 
-<p style="text-align: center; font-weight: bold">Fig. 7: Mars’ two-slope interest rate model</p>
-
 ![Mars’ two-slope interest rate model](./images/fig-7.png)
+
+**<p align="center">Fig. 7: Mars’ two-slope interest rate model</p>**
 
 These parameters reflect the perceived riskiness of the asset in question and is determined by the Martian Council using the asset listing risk framework.
 
@@ -177,15 +178,15 @@ Consider the following liquidation example.
 
 First, a user deposits and borrows from a Red Bank outpost. Over time, the value of their deposit falls. This pushes their health factor below 1 and makes the account eligible for liquidation, as shown  in Fig. 8.
 
-<p style="text-align: center; font-weight: bold">Fig. 8: Liquidation flow, Part 1</p>
-
 ![Liquidation flow, Part 1](./images/fig-8.png)
+
+**<p align="center">Fig. 8: Liquidation flow, Part 1</p>**
 
 A liquidator then identifies the account, pays off a portion of the debt, and receives a 5% liquidation bonus. The user retains a portion of their debt plus their original deposit(s) minus the liquidation bonus, as shown in Fig. 9.
 
-<p style="text-align: center; font-weight: bold">Fig. 9: Liquidation flow, Part 2</p>
-
 ![Liquidation flow, Part 2](./images/fig-9.png)
+
+**<p align="center">Fig. 9: Liquidation flow, Part 2</p>**
 
 ## 4. Rover Credit Accounts
 
@@ -207,9 +208,9 @@ A user can have one or several credit accounts, each of which are represented as
 
 The architecture is modular and extensible, allowing new protocols and integrations to be added easily, as shown in Fig. 10. 
 
-<p style="text-align: center; font-weight: bold">Fig. 10: Credit account architecture</p>
-
 ![Credit account architecture](./images/fig-10.png)
+
+**<p align="center">Fig. 10: Credit account architecture</p>**
 
 ### 4.2 Integrations 
 
@@ -246,15 +247,15 @@ Mars is designed to enable spot and leveraged trading of specific assets on its 
 
 Imagine a hypothetical trader who sees a market opportunity to short ATOM, which is trading at $10. The trader sells 100 ATOM on margin against axlUSDC, borrowing against his collateral in the process. On the backend, the credit account borrows 100 ATOM from the Red Bank and swaps it for 1,000 axlUSDC. The trader’s total debt is now 100 ATOM. Fig. 11 shows two hypothetical outcomes from this trade.
 
-<p style="text-align: center; font-weight: bold">Fig. 11: Short selling example within a credit account</p>
-
 ![Short selling example within a credit account](./images/fig-11.png)
+
+**<p align="center">Fig. 11: Short selling example within a credit account</p>**
 
 Now, imagine a hypothetical trader who sees a market opportunity to long ATOM, which is trading at $10. The trader buys 200 ATOM on margin by borrowing axlUSDC against his collateral. On the backend, the credit account borrows 2,000 axlUSDC from the Red Bank and swaps it for 200 ATOM. The trader’s total debt is now 2,000 axlUSDC. Fig. 12 shows two hypothetical outcomes from this trade.
 
-<p style="text-align: center; font-weight: bold">Fig. 12: Leveraged long example within a credit account</p>
-
 ![Leveraged long example within a credit account](./images/fig-12.png)
+
+**<p align="center">Fig. 12: Leveraged long example within a credit account</p>**
 
 Ultimately, governance will be responsible for the scope and robustness of trading activity on Mars. Specifically, governance will be able to determine the following criteria:
 
@@ -264,9 +265,9 @@ Ultimately, governance will be responsible for the scope and robustness of tradi
 
 Fig. 13 shows how the process for whitelisting a DEX or adding an asset to the Red Bank works.
 
-<p style="text-align: center; font-weight: bold">Fig. 13: Adding support for spot and leveraged assets on Mars v2</p>
-
 ![Adding support for spot and leveraged assets on Mars v2](./images/fig-13.png)
+
+**<p align="center">Fig. 13: Adding support for spot and leveraged assets on Mars v2</p>**
 
 #### 4.2.2 Vaults
 
@@ -284,23 +285,23 @@ In the Fields of Mars users can leverage yield farm vault positions by using rov
 
 Initially, each deposit into a Fields vault creates a credit account with a single position. Fig. 14 shows, at a high level, how deposits work with the OSMO-ATOM strategy, resulting in an effective 2x leverage ratio for the user.
 
-<p style="text-align: center; font-weight: bold">Fig. 14: A leveraged yield farming position in the Fields of Mars</p>
-
 ![A leveraged yield farming position in the Fields of Mars](./images/fig-14.png)
+
+**<p align="center">Fig. 14: A leveraged yield farming position in the Fields of Mars</p>**
 
 This allows the user to farm with leverage with increased yield (in the form of OSMO tokens issued as bonding rewards). However, should the value of OSMO drop, the risk of liquidation is increased. Both scenarios are illustrated below.
 
 In scenario 1 (Fig. 15), the user supplies ATOM and borrows OSMO from the Red Bank's OSMO pool. The ATOM and OSMO are deposited in the ATOM-OSMO LP pool and staked in the Osmosis staking contract. As long as the yield in fees and OSMO rewards exceeds the interest rate, the user's profit will increase faster than borrowing costs.
 
-<p style="text-align: center; font-weight: bold">Fig. 15: Value of LP asset remains constant or increases</p>
-
 ![Value of LP asset remains constant or increases](./images/fig-15.png)
+
+**<p align="center">Fig. 15: Value of LP asset remains constant or increases</p>**
 
 In Scenario 2 (see Fig. 16), the ATOM-OSMO LP share is held as collateral by the smart contract and the value of the collateral and debt is tracked over time (using the AMM itself as the oracle). If the ratio of debt to collateral exceeds a certain level defined in the smart contract (i.e. the margin requirement), the LP share is liquidated to pay back the debt.
 
-<p style="text-align: center; font-weight: bold">Fig. 16: Value of LP asset decreases, resulting in liquidation</p>
-
 ![Value of LP asset decreases, resulting in liquidation](./images/fig-16.png)
+
+**<p align="center">Fig. 16: Value of LP asset decreases, resulting in liquidation</p>**
 
 ### 4.3 Rover Liquidation Mechanisms
 
@@ -337,9 +338,9 @@ This unique architecture enables:
 3. A source of truth for MARS tokens
 4. Staking reward distributions
 
-<p style="text-align: center; font-weight: bold">Fig. 17: Mars’ “hub and spoke” topology</p>
-
 ![Mars’ “hub and spoke” topology](./images/fig-17.png)
+
+**<p align="center">Fig. 17: Mars’ “hub and spoke” topology</p>**
 
 This flexible, multi-chain strategy is not reliant upon any non-Mars Hub blockchain as a home base for governance, and it will allow Mars v2 to support a wide range of blockchains in the future.
 
@@ -391,9 +392,9 @@ The token’s utility will mainly materialise via delegation. Specifically, MARS
 
 At launch, 80% of all “interest” payments will flow to Red Bank lenders (depositors), and the remaining 20% will be split equally between the Safety Fund (described in the next section) and Mars Hub stakers (less a commission to validators, if applicable) (see Fig. 18). All interest payments sent to the Safety Fund are first swapped to Axelar USDC (axlUSDC) by a rewards collector contract and transferred to Mars Hub. Interest payments for Mars Hub validators are swapped to MARS and sent to the Mars Hub distribution module, which splits it between validators and delegators per the validator’s commission rates.
 
-<p style="text-align: center; font-weight: bold">Fig. 18: Value flows</p>
-
 ![Value flows](./images/fig-18.png)
+
+**<p align="center">Fig. 18: Value flows</p>**
 
 *Note that the share of fees, the asset they’re denominated in and the fee recipient groups are parameters that can be adjusted by Mars governance.*
 
@@ -411,9 +412,9 @@ Ultimately, however, compensation cannot be guaranteed and is subject to the dis
 
 ### 6.5 MARS Allocation and Distribution
 
-<p style="text-align: center; font-weight: bold">Fig. 19: MARS token distribution</p>
-
 ![MARS token distribution](./images/fig-19.png)
+
+**<p align="center">Fig. 19: MARS token distribution</p>**
 
 The maximum supply of MARS tokens will be 1 billion and the final token allocation is as follows: 
 
@@ -441,9 +442,9 @@ Governance decisions that impact Mars Hub are binding. Governance decisions impa
 
 Mars v2 will be enabled in phases as its components are heavily interdependent. Each phase (see Fig. 20) builds upon the previous phase(s) until the full activation of rovers and Mars v2.
 
-<p style="text-align: center; font-weight: bold">Fig. 20: Mars v2’s phased rollout</p>
-
 ![MARS token distribution](./images/fig-20.png)
+
+**<p align="center">Fig. 20: Mars v2’s phased rollout</p>**
 
 Note that Osmosis-based credit accounts will not initially support cross-collateralised strategies in the Fields of Mars. Instead, each credit account will feature isolated margin for each approved leveraged yield farming strategy. This means that users who open multiple leveraged yield farming positions will have multiple rover credit accounts on Osmosis. After launch, governance can activate cross-collateralisation within a single rover as liquidity matures on Osmosis. Chains with established liquidity are expected to support cross-collateralised rover credit accounts upon activation. These progressive activations are subject to change. As a decentralised project, anyone can permissionlessly contribute to Mars Protocol’s development by making a proposal to the DAO. This participation is encouraged.
 
