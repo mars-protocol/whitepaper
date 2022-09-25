@@ -45,7 +45,7 @@ Rovers effectively allow for a “rebundled” DeFi experience as users would be
 
 This new architecture leads to significant advantages, as detailed in Fig. 1.
 
-<p style="text-align: center; font-weight: bold">Fig. 1: Classic C2C Lending vs. Mars v2 C2C Lending</p>
+**<p align="center"> Fig. 1: Classic C2C Lending vs. Mars v2 C2C Lending</p>**
 
 ![Classic C2C Lending vs. Mars v2 C2C Lending](./images/fig-1.png)
 
