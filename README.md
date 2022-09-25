@@ -75,12 +75,12 @@ Fig. 3 outlines an example of the DeFi subaccount experience on Mars v2.
 
 Mars Hub and its outposts work together to enable this functionality. They, in turn, are governed by the Martian Council, which is composed of MARS stakers and validators. Stakers put skin in the game by allowing their tokens to be used by validators who engage in Proof of Stake (PoS) block production/validation on Mars Hub and participate in governance in exchange for a share of the protocol revenues, which are derived in part from borrowing fees.
 
-To manage risk, all leverage activities must be whitelisted by the Martian Council and will be assigned risk parameters that set borrowing limits for each type of activity. Independent liquidators can subsequently close any position in the event that position exceeds its borrowing limit. Liquidations are most likely when the value of a user’s collateral falls relative to the value of their borrowed assets.
+To manage risk, all leverage activities must be whitelisted by the Martian Council and will be assigned risk parameters that set borrowing limits for each type of activity. Independent liquidators can subsequently close any position in the event that the position exceeds its borrowing limit. Liquidations are most likely when the value of a user’s collateral falls relative to the value of their borrowed assets.
 
 The following sections elaborate upon all of Mars v2’s components.
 
 ## 3. Red Bank
-A Mars “outpost” consists of two components on any supported chain: the Red Bank and rover credit accounts. The Red Bank is a fully automated, on-chain credit facility, which provides liquidity for rover credit accounts. Specifically, the Red Bank supports two types of lending: 
+A Mars “outpost” consists of two components on any supported chain: the Red Bank and rover credit accounts. The Red Bank is a fully automated, on-chain credit facility which provides liquidity for rover credit accounts. Specifically, the Red Bank supports two types of lending: 
 
 1. Collateralised loans directly within the Red Bank
 2. Contract-to-contract (C2C) lending to whitelisted smart contracts. C2C lending powers rover credit accounts, which enable users to access leverage when interacting with core DeFi primitives.
@@ -89,7 +89,7 @@ Each deployment of the Red Bank for a given outpost is comprised of the followin
 
 - **Validators/Stakers**: Stake MARS on Mars Hub, secure the Mars Hub network, govern outposts, implement new features and set risk parameters. In return for doing so, they earn a portion of protocol revenues. 
 - **Lenders**: Deposit assets into Mars liquidity pools, earning a fee analogous to an interest rate.
-- **Borrowers (collateralised)**: Borrow assets from Mars liquidity pools using their deposited assets as collateral. These borrowers must therefore also be depositors.
+- **Borrowers (collateralised)**: Borrow assets from Mars liquidity pools using their deposited assets as collateral. These borrowers must, therefore, also be depositors.
 - **Borrowers (contract-based)**: Smart contracts that are whitelisted to borrow assets from Mars liquidity pools without posting collateral (as the contracts themselves will hold collateral). Each smart contract must be approved by governance, with a set credit limit to mitigate the protocol’s risk exposure. These credit lines power Mars’ credit accounts, giving end users access to leverage without first requiring Red Bank deposits.
 - **Liquidators**: Third parties that liquidate Red Bank positions by repaying the debt of under-collateralised users in exchange for a fee.
 
@@ -175,13 +175,13 @@ Liquidations follow a multi-step process:
 
 Consider the following liquidation example. 
 
-First, a user deposits and borrows from a Red Bank outpost. Over time, the value of their deposit falls. This pushes their health factor below 1 and makes the account eligible for liquidation as shown in Fig. 8.
+First, a user deposits and borrows from a Red Bank outpost. Over time, the value of their deposit falls. This pushes their health factor below 1 and makes the account eligible for liquidation, as shown  in Fig. 8.
 
 <p style="text-align: center; font-weight: bold">Fig. 8: Liquidation flow, Part 1</p>
 
 ![Liquidation flow, Part 1](./images/fig-8.png)
 
-A liquidator then identifies the account, pays off a portion of the debt, and receives a 5% liquidation bonus. The user retains a portion of their debt plus their original deposit(s) minus the liquidation bonus as shown in Fig. 9.
+A liquidator then identifies the account, pays off a portion of the debt, and receives a 5% liquidation bonus. The user retains a portion of their debt plus their original deposit(s) minus the liquidation bonus, as shown in Fig. 9.
 
 <p style="text-align: center; font-weight: bold">Fig. 9: Liquidation flow, Part 2</p>
 
@@ -258,7 +258,7 @@ Now, imagine a hypothetical trader who sees a market opportunity to long ATOM, w
 
 Ultimately, governance will be responsible for the scope and robustness of trading activity on Mars. Specifically, governance will be able to determine the following criteria:
 
-1. The underlying DEXes that are whitelisted for trading. 
+1. The underlying DEXs that are whitelisted for trading. 
 2. The assets that are borrowable on the Red Bank. As mentioned above, this determines the list of assets available to be shorted and, in the case of stablecoins, allows for assets to be longed.
 3. The risk parameters of assets added to the Red Bank: these ultimately determine the leverage a user can take on a given position.
 
@@ -288,7 +288,7 @@ Initially, each deposit into a Fields vault creates a credit account with a sing
 
 ![A leveraged yield farming position in the Fields of Mars](./images/fig-14.png)
 
-This allows the user to farm with leverage with increased yield (in the form of OSMO tokens issued as bonding rewards). However should the value of OSMO drop, the risk of liquidation is increased. Both scenarios are illustrated below.
+This allows the user to farm with leverage with increased yield (in the form of OSMO tokens issued as bonding rewards). However, should the value of OSMO drop, the risk of liquidation is increased. Both scenarios are illustrated below.
 
 In scenario 1 (Fig. 15), the user supplies ATOM and borrows OSMO from the Red Bank's OSMO pool. The ATOM and OSMO are deposited in the ATOM-OSMO LP pool and staked in the Osmosis staking contract. As long as the yield in fees and OSMO rewards exceeds the interest rate, the user's profit will increase faster than borrowing costs.
 
