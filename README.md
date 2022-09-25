@@ -3,34 +3,33 @@
 - [1. Vision](#1-vision)
 - [2. Overview](#2-overview)
 - [3. Red Bank](#3-red-bank)
-  - [Collateralised Borrowing](#collateralised-borrowing)
-  - [Interest Rate Model](#interest-rate-model)
-  - [Contract-to-Contract (C2C) Lending](#contract-to-contract-c2c-lending)
-  - [Red Bank Liquidation Mechanisms](#red-bank-liquidation-mechanisms)
+  - [3.1 Collateralised Borrowing](#31-collateralised-borrowing)
+  - [3.2 Interest Rate Model](#32-interest-rate-model)
+  - [3.3 Contract-to-Contract (C2C) Lending](#33-contract-to-contract-c2c-lending)
+  - [3.4 Red Bank Liquidation Mechanisms](#34-red-bank-liquidation-mechanisms)
 - [4. Rover Credit Accounts](#4-rover-credit-accounts)
-  - [Credit Account Architecture](#credit-account-architecture)
-  - [Integrations](#integrations)
-    - [Trading](#trading)
-    - [Vaults](#vaults)
-    - [Fields of Mars](#fields-of-mars)
-  - [Rover Liquidation Mechanisms](#rover-liquidation-mechanisms)
-  - [NFT Accounts](#nft-accounts)
+  - [4.1 Credit Account Architecture](#41-credit-account-architecture)
+  - [4.2 Integrations](#42-integrations)
+    - [4.2.1 Trading](#421-trading)
+    - [4.2.2 Vaults](#422-vaults)
+    - [4.2.3 Fields of Mars](#423-fields-of-mars)
+  - [4.3 Rover Liquidation Mechanisms](#43-rover-liquidation-mechanisms)
+  - [4.4 NFT Accounts](#44-nft-accounts)
 - [5. Mars Hub](#5-mars-hub)
-  - [Engineering Mars Hub](#engineering-mars-hub)
 - [6. Mars Token Economics](#6-mars-token-economics)
-  - [Claiming MARS](#claiming-mars)
-  - [MARS Staking](#mars-staking)
-  - [Value Flows](#value-flows)
-  - [Safety Fund](#safety-fund)
-  - [MARS Allocation and Distribution](#mars-allocation-and-distribution)
+  - [6.1 Claiming MARS](#61-claiming-mars)
+  - [6.2 MARS Staking](#62-mars-staking)
+  - [6.3 Value Flows](#63-value-flows)
+  - [6.4 Safety Fund](#64-safety-fund)
+  - [6.5 MARS Allocation and Distribution](#65-mars-allocation-and-distribution)
 - [7. Governance](#7-governance)
 - [8. Activation and Future](#8-activation-and-future)
 
 **DISCLAIMER**
 
-This whitepaper does not constitute investment advice, does not include any promises, offers, guarantees, representations or warranties, and includes speculative forward-looking statements about potential post-launch capabilities of Mars. This whitepaper is qualified in its entirety by the project disclaimers [here](https://mars-protocol.medium.com/mars-disclaimers-disclosures-f44cc7c54a33).
+*This whitepaper does not constitute investment advice, does not include any promises, offers, guarantees, representations or warranties, and includes speculative forward-looking statements about potential post-launch capabilities of Mars. This whitepaper is qualified in its entirety by the project disclaimers [here](https://mars-protocol.medium.com/mars-disclaimers-disclosures-f44cc7c54a33).*
 
-This article is subject to change but is not guaranteed to be up to date. Mars Protocol v2 was published on September 25, 2022.
+*This article is subject to change but is not guaranteed to be up to date. Mars Protocol v2 was published on September 25, 2022.*
 
 ## 1. Vision
 
@@ -44,7 +43,7 @@ Crucially, in addition to enabling cross-collateralisation between C2C strategie
 
 Rovers effectively allow for a “rebundled” DeFi experience as users would be able to access their favourite tokens, farms, and protocols, using leverage, through the Mars credit account. This integrated experience represents the next evolution of DeFi, providing a user experience (UX) comparable to centralised exchanges (CEXes) on many important dimensions (such as speed, leverage, liquidation penalty, and asset choice), while gaining the potential to integrate key DeFi primitives and maintaining the advantages of decentralisation: self-custody and censorship-resistance.
 
-This new architecture leads to significant advantages as detailed in Fig. 1.
+This new architecture leads to significant advantages, as detailed in Fig. 1.
 
 <p style="text-align: center; font-weight: bold">Fig. 1: Classic C2C Lending vs. Mars v2 C2C Lending</p>
 
@@ -52,7 +51,7 @@ This new architecture leads to significant advantages as detailed in Fig. 1.
 
 To achieve this vision, the Mars smart contracts must deploy on a highly performant, decentralised platform offering a thriving DeFi ecosystem with many potential integrations and demand for leverage. 
 
-There are a few Cosmos chains which fulfil these requirements and have a chance of becoming an active Cosmos DeFi hub. The Red Bank should exist wherever there’s demand for liquidity, and ideally Mars would be present on each of these chains rather than selecting a single platform and wedding its fate to it. Crucially, Mars should be present on these chains natively since a competitive DeFi experience requires atomic, synchronous composability, which cannot be achieved by cross-chain calls.
+There are a few Cosmos chains which fulfil these requirements and have a chance of becoming an active Cosmos DeFi hub. The Red Bank should exist wherever there’s demand for liquidity, and ideally, Mars would be present on each of these chains rather than selecting a single platform and wedding its fate to it. Crucially, Mars should be present on these chains natively since a competitive DeFi experience requires atomic, synchronous composability, which cannot be achieved by cross-chain calls.
 
 This is the rationale that underpins the Mars Hub and Outpost topology, which is illustrated below in Fig. 2. Each outpost is an integrated DeFi experience native to a specific chain which connects to the Mars Hub - a Cosmos SDK chain.<a href="#note1" id="note1ref"><sup>1</sup></a>
 
@@ -60,13 +59,13 @@ This is the rationale that underpins the Mars Hub and Outpost topology, which is
 
 ![Mars’ “hub and spoke” architecture](./images/fig-2.png)
 
-The Hub itself does not hold liquidity for outposts, but rather administers activity that occurs on its outposts. Specifically, it governs all outpost smart contracts, receives fees from outposts and distributes them to participants in Mars’ governance. In this way, Mars Hub acts like a fast food franchiser: establishing standards, but leaving interaction with customers to individual franchise restaurants. Similarly, traders and yield seekers who aren’t interested in governance will be unlikely to interact with the Hub. Instead, the Hub serves as a coordination mechanism in the background, while traders interact directly with the liquidity aggregated on each of the Mars outposts.
+The Hub itself does not hold liquidity for outposts but rather administers activity that occurs on its outposts. Specifically, it governs all outpost smart contracts, receives fees from outposts and distributes them to participants in Mars’ governance. In this way, Mars Hub acts like a fast food franchiser: establishing standards but leaving interaction with customers to individual franchise restaurants. Similarly, traders and yield seekers who aren’t interested in governance will be unlikely to interact with the Hub. Instead, the Hub serves as a coordination mechanism in the background, while traders interact directly with the liquidity aggregated on each of the Mars outposts.
 
 ## 2. Overview
 
 While subaccounts are quite popular on centralised exchanges, they’re not yet common in DeFi. Mars v2 changes that by offering “DeFi subaccounts.” By enabling integrations with new and existing DeFi primitives, these subaccounts should allow greater functionality than subaccounts on centralised exchanges. 
 
-Ultimately, credit accounts act as a wrapper for numerous on-chain positions a user may have taken. That means credit accounts can be represented as a transferable NFT, which could unlock additional use cases such as copy-trading, atomic transfers, "credit scoring", fractionalisation and more as detailed in the section on [NFT accounts](#nft-accounts). 
+Ultimately, credit accounts act as a wrapper for numerous on-chain positions a user may have taken. That means credit accounts can be represented as a transferable NFT, which could unlock additional use cases such as copy-trading, atomic transfers, "credit scoring", fractionalisation and more, as detailed in the section on [NFT accounts](#nft-accounts). 
 
 Fig. 3 outlines an example of the DeFi subaccount experience on Mars v2.
 
@@ -74,7 +73,7 @@ Fig. 3 outlines an example of the DeFi subaccount experience on Mars v2.
 
 ![Rover credit account user journey](./images/fig-3.png)
 
-Mars Hub and its outposts work together to enable this functionality. They, in turn, are governed by the Martian Council, which is composed of MARS staker and validators. Stakers put skin in the game by allowing their tokens to be used by validators who engage in Proof of Stake (PoS) block production/validation on Mars Hub and participate in governance in exchange for a share of the protocol revenues, which are derived in part from borrowing fees.
+Mars Hub and its outposts work together to enable this functionality. They, in turn, are governed by the Martian Council, which is composed of MARS stakers and validators. Stakers put skin in the game by allowing their tokens to be used by validators who engage in Proof of Stake (PoS) block production/validation on Mars Hub and participate in governance in exchange for a share of the protocol revenues, which are derived in part from borrowing fees.
 
 To manage risk, all leverage activities must be whitelisted by the Martian Council and will be assigned risk parameters that set borrowing limits for each type of activity. Independent liquidators can subsequently close any position in the event that position exceeds its borrowing limit. Liquidations are most likely when the value of a user’s collateral falls relative to the value of their borrowed assets.
 
@@ -102,7 +101,7 @@ Fig. 4 illustrates the stakeholders and value flows in the Red Bank.
 
 Multiple outposts can be established – all of which are coordinated by Mars Hub and governed by the Martian Council.
 
-### Collateralised Borrowing
+### 3.1 Collateralised Borrowing
 
 Similar to existing credit protocols such as Aave or Compound, Mars is designed to support non-custodial, over-collateralised borrowing. Users who deposit assets into smart contract liquidity pools may borrow other assets listed on the Red Bank using their original deposits as collateral.
 
@@ -122,9 +121,9 @@ The following figures illustrate collateralised borrowing and how loan-to-value 
 
 ![Borrowing stablecoin assets with volatile collateral](./images/fig-6.png)
 
-### Interest Rate Model
+### 3.2 Interest Rate Model
 
-Red Bank outposts operate with a standard two-slope interest rate model (see Fig. 7). Pioneered by [Aave](https://github.com/aave/aave-protocol/blob/master/docs/Aave_Protocol_Whitepaper_v1_0.pdf) and [Compound](https://compound.finance/documents/Compound.Whitepaper.pdf), this model is battle-tested and widely used throughout DeFi. It works by targeting a certain utilisation rate (amount borrowed / amount deposited). Then, a curve is derived and implemented that aims to discourage utilisation past the optimal level by a sharply increasing slope, i.e. a sharply increasing interest rate.
+The Red Bank operates with a standard two-slope interest rate model (see Fig. 7). Pioneered by [Aave](https://github.com/aave/aave-protocol/blob/master/docs/Aave_Protocol_Whitepaper_v1_0.pdf) and [Compound](https://compound.finance/documents/Compound.Whitepaper.pdf), this model is battle-tested and widely used throughout DeFi. It works by targeting a certain utilisation rate (amount borrowed / amount deposited). Then, a curve is derived and implemented that aims to discourage utilisation past the optimal level by a sharply increasing slope, i.e. a sharply increasing interest rate.
 
 <p style="text-align: center; font-weight: bold">Fig. 7: Mars’ two-slope interest rate model</p>
 
@@ -132,15 +131,15 @@ Red Bank outposts operate with a standard two-slope interest rate model (see Fig
 
 These parameters reflect the perceived riskiness of the asset in question and is determined by the Martian Council using the asset listing risk framework.
 
-### Contract-to-Contract (C2C) Lending
+### 3.3 Contract-to-Contract (C2C) Lending
 
 Contract-to-contract (C2C) lending taps into a completely new source of borrowing demand for credit protocols: non-depositor borrowers (i.e., third-party smart contracts). This additional source of demand can lead to a significantly more competitive credit protocol, since it can create a virtuous cycle in which higher borrowing demand (from this new source) leads to higher utilisation rates, which leads to more deposits and so on. C2C loans power Mars' credit accounts, enabling leveraged yield farming in the Fields of Mars and later use cases which give users the ability to leverage their positions on any chain that has an outpost.
 
-It’s important to realise that C2C loans, despite being distinguished from “collateralised” loans in this whitepaper, are not uncollateralised per se. While the smart contract receiving the loan doesn’t need to deposit collateral on the Red Bank in order to receive the loan (unlike regular users), mechanisms to ensure solvency must be implemented. Collateral is always required from the end user and is held by the C2C lending contracts, which is able to track its value and liquidate if the position becomes unhealthy. In this sense, collateralisation happens at the borrowing contract level rather than at the Red Bank level, as it’s the borrowing contract that receives the loan.
+It’s important to realise that C2C loans, despite being distinguished from “collateralised” loans in this whitepaper, are not uncollateralised per se. While the smart contract receiving the loan doesn’t need to deposit collateral on the Red Bank in order to receive the loan (unlike regular users), mechanisms to ensure solvency must be implemented. Collateral is always required from the end user and is held by the C2C lending contracts, which are able to track the collateral's value and liquidate it if the position becomes unhealthy. In this sense, collateralisation happens at the borrowing contract level rather than at the Red Bank level, as it’s the borrowing contract that receives the loan.
 
 In order for collateralisation at the borrowing contract level to matter, it needs to be accompanied by a sound liquidation engine. As such, borrowing contracts that wish to utilise C2C borrowing, including the credit accounts described in Section 4, must have liquidation logic implemented that ensures their ability to repay the debt regardless of market conditions. Developers are free to choose their preferred logic and parameters, but these must be approved by the Martian Council in order for C2C “credit lines” to be extended.
 
-### Red Bank Liquidation Mechanisms
+### 3.4 Red Bank Liquidation Mechanisms
 
 In order to avoid insolvencies, the Red Bank offers incentives to liquidators to repay the debt of at-risk positions. Within the Red Bank, the health of a position (the level of collateralisation) is expressed in the health factor (HF) formula. This formula determines if an active account is healthy (overcollateralised) and consequently can be sustained, or at risk (undercollateralised) and consequently needs to be liquidated.
 
@@ -176,7 +175,7 @@ Liquidations follow a multi-step process:
 
 Consider the following liquidation example. 
 
-First, a user deposits and borrows from a red bank outpost. Over time, the value of their deposit falls. This pushes their health factor below 1 and makes the account eligible for liquidation as shown in Fig. 8.
+First, a user deposits and borrows from a Red Bank outpost. Over time, the value of their deposit falls. This pushes their health factor below 1 and makes the account eligible for liquidation as shown in Fig. 8.
 
 <p style="text-align: center; font-weight: bold">Fig. 8: Liquidation flow, Part 1</p>
 
@@ -204,7 +203,7 @@ Through this mechanism, users access higher leverage and use this leverage acros
 
 A user can have one or several credit accounts, each of which are represented as an NFT. NFT accounts open up an exciting world of possibilities, which are explored below.
 
-### Credit Account Architecture 
+### 4.1 Credit Account Architecture 
 
 The architecture is modular and extensible, allowing new protocols and integrations to be added easily, as shown in Fig. 10. 
 
@@ -212,7 +211,7 @@ The architecture is modular and extensible, allowing new protocols and integrati
 
 ![Credit account architecture](./images/fig-10.png)
 
-### Integrations 
+### 4.2 Integrations 
 
 Leverage account primitives specify which token(s) and smart contract(s) are whitelisted by Mars v2’s Credit Manager module. Integrations should give lenders confidence that their funds won’t be exfiltrated by borrowers. Therefore, it’s important that Mars governance works to guarantee that only robust and safe integrations are approved.
 
@@ -225,7 +224,7 @@ In general, integrations can be broken down into two categories:
 
 The following sections explore these integration types.
 
-#### Trading
+#### 4.2.1 Trading
 
 Mars is designed to enable spot and leveraged trading of specific assets on its outposts when approved by governance. Trading (and leveraged trading) will work differently for specific types of trades as explained in the subsections below.
 
@@ -269,7 +268,7 @@ Fig. 13 shows how the process for whitelisting a DEX or adding an asset to the R
 
 ![Adding support for spot and leveraged assets on Mars v2](./images/fig-13.png)
 
-#### Vaults
+#### 4.2.2 Vaults
 
 Vaults are the container for assets implementing automated strategies, which generate yield. They offer auto-compounded yield generation capabilities on any supported chain. Written by third parties and approved for integration with Mars by the Martian Council, users can deposit assets into these vaults to participate in the automated yield generation strategies. Strategies could include:
 
@@ -279,7 +278,7 @@ Vaults are the container for assets implementing automated strategies, which gen
 
 At any time, third parties can author or propose new vault strategies with custom risk parameters for Mars. If approved by governance, these strategies will be deployed and incorporated into Mars’ credit accounts, so they can be used as collateral for other activities. Each credit account will also support multiple cross-collateralised vault positions. The first vault strategies are leveraged yield farming, which will be supported by the Fields of Mars.
 
-####  Fields of Mars
+####  4.2.3 Fields of Mars
 
 In the Fields of Mars users can leverage yield farm vault positions by using rover credit accounts.
 
@@ -303,7 +302,7 @@ In Scenario 2 (see Fig. 16), the ATOM-OSMO LP share is held as collateral by the
 
 ![Value of LP asset decreases, resulting in liquidation](./images/fig-16.png)
 
-### Rover Liquidation Mechanisms
+### 4.3 Rover Liquidation Mechanisms
 
 The Credit Manager module is responsible for tracking the health of each credit account and ensuring that accounts at risk are liquidated promptly in order to avoid the accumulation of bad debt.
 
@@ -315,7 +314,7 @@ Since HFs apply to all assets in a given rover credit account, all of the user�
 
 Note that liquidations occur inside the liquidator’s credit account. Any liquidated assets are sent directly to the liquidator’s rover rather than the user’s wallet. Because liquidators must use the credit manager to initiate a liquidation, they can borrow the funds required to pay down Red Bank debt. This is possible because the transactions can be completed in a single transaction. Specifically, a liquidator can borrow the debt asset, swap the collateral asset back to the debt asset and repay the Red Bank all at once. In this way, credit accounts enable a flash-loan like mechanism to facilitate liquidations. 
 
-### NFT Accounts
+### 4.4 NFT Accounts
 
 Credit accounts will be represented as NFTs, opening up a range of potential use cases including:
 
@@ -338,13 +337,11 @@ This unique architecture enables:
 3. A source of truth for MARS tokens
 4. Staking reward distributions
 
-This flexible, multi-chain strategy is not reliant upon any non-Mars Hub blockchain as a home base for governance, and it will allow Mars v2 to support a wide range of blockchains in the future.
-
 <p style="text-align: center; font-weight: bold">Fig. 17: Mars’ “hub and spoke” topology</p>
 
 ![Mars’ “hub and spoke” topology](./images/fig-17.png)
 
-### Engineering Mars Hub
+This flexible, multi-chain strategy is not reliant upon any non-Mars Hub blockchain as a home base for governance, and it will allow Mars v2 to support a wide range of blockchains in the future.
 
 **Running Smart Contracts on Mars Hub**
 
@@ -356,13 +353,11 @@ Mars Hub’s design features a permissioned version of the WASM module, where de
 
 Validators will be required to produce blocks for Mars Hub. Mars Hub’s design calls for a PoS consensus mechanism native to the Cosmos SDK v0.45. This includes a permissionless validator set, which is open to participation by any entity.
 
-Mars Hub is expected to use the validator infrastructure native to the Cosmos SDK v0.45 with slight modifications to the incentives module as noted below in “Bespoke Modules at Launch.” A testnet and testnet MARS are expected to be available via a Mars testnet web app faucet.
+Mars Hub is expected to use the validator infrastructure native to the Cosmos SDK v0.45 with slight modifications to the incentives module as noted below in “Bespoke Modules at Launch.” A testnet, testnet faucet and testnet MARS are expected to be publicly available.
 
 Validator participation on the Mars Hub testnet and mainnet is encouraged. A validator onboarding document available to the community prior to the launches of the testnet and mainnet is expected to be accessible at [docs.marsprotocol.io](https://docs.marsprotocol.io/mars-protocol/).
 
 **Bespoke Modules at launch**
-
-Appchains using the Cosmos SDK are constructed by aggregating the configurable and interoperable modules listed here. Mars Hub is designed with three additional custom modules:
 
 Appchains using the Cosmos SDK are constructed by aggregating the configurable and interoperable modules listed [here](https://docs.cosmos.network/main/modules/). Mars Hub is designed with three additional custom modules:
 
@@ -374,13 +369,13 @@ Appchains using the Cosmos SDK are constructed by aggregating the configurable a
 
 Helping coordinate and align incentives of the different stakeholders involved, the MARS token is a key piece of the Mars ecosystem. This section explores how the token is designed to be used within the Mars ecosystem and distributed over time.
 
-### Claiming MARS
+### 6.1 Claiming MARS
 
 MARS tokens were initially minted on what is now referred to as the Terra Classic blockchain. MARS holders as of two Terra Classic snapshot dates will be eligible to claim newly-minted MARS tokens on Mars Hub. Snapshot details as well as the planned MARS distribution can be reviewed [here](https://mars-protocol.medium.com/unveiling-the-mars-airdrop-and-snapshot-data-ea4f3926f2ca).
 
 Details on the token claim process are expected to be announced closer to the launch of mainnet. After a user has submitted a successful claim for their tokens, the tokens will be airdropped to their new MARS address and accessible via a Keplr wallet.
 
-### MARS Staking
+### 6.2 MARS Staking
 
 In Mars v1, MARS stakers were responsible for governing the protocol and backstopping it in the event of a shortfall event. Staked tokens were represented by xMARS, a transferable liquid staking token.
 
@@ -392,7 +387,7 @@ The token’s utility will mainly materialise via delegation. Specifically, MARS
 2. **Access delegated governance**: When staking tokens with a particular validator, users are delegating the voting power of their tokens to that validator. In this sense, delegation allows users to participate in governance by staking their tokens with (and thereby increasing the voting power of) validators who align with their views. A user can passively allow a validator to vote on their behalf or they can actively participate in votes themselves.  
 3. **Receive fees**: In return for securing the chain, a share of protocol fees will flow to validators and their delegators. Note that the share that flows to delegators depends on the specific commission charged by each validator. Specific details are provided in the next section, “Value Flows”.
 
-### Value Flows
+### 6.3 Value Flows
 
 At launch, 80% of all “interest” payments will flow to Red Bank lenders (depositors), and the remaining 20% will be split equally between the Safety Fund (described in the next section) and Mars Hub stakers (less a commission to validators, if applicable) (see Fig. 18). All interest payments sent to the Safety Fund are first swapped to Axelar USDC (axlUSDC) by a rewards collector contract and transferred to Mars Hub. Interest payments for Mars Hub validators are swapped to MARS and sent to the Mars Hub distribution module, which splits it between validators and delegators per the validator’s commission rates.
 
@@ -402,7 +397,7 @@ At launch, 80% of all “interest” payments will flow to Red Bank lenders (dep
 
 *Note that the share of fees, the asset they’re denominated in and the fee recipient groups are parameters that can be adjusted by Mars governance.*
 
-### Safety Fund
+### 6.4 Safety Fund
 
 Shortfall events happen whenever the value of a borrower’s debt exceeds the value of the borrower’s collateral. This deficit is distinct from an illiquidity event, where utilisation rates are at 100% and lenders are temporarily unable to withdraw their deposits. In the latter case, the protocol is illiquid but solvent, whereas in a shortfall event the protocol is actually insolvent.
 
@@ -414,7 +409,7 @@ Mars v2 will feature a Safety Fund, but will not launch with a Safety Module as 
 
 Ultimately, however, compensation cannot be guaranteed and is subject to the discretion of Mars governance. Based on the relevant incentives, though, Mars governance is expected to treat the Safety Fund as a coverage source of first resort. 
 
-### MARS Allocation and Distribution
+### 6.5 MARS Allocation and Distribution
 
 <p style="text-align: center; font-weight: bold">Fig. 19: MARS token distribution</p>
 
@@ -422,9 +417,9 @@ Ultimately, however, compensation cannot be guaranteed and is subject to the dis
 
 The maximum supply of MARS tokens will be 1 billion and the final token allocation is as follows: 
 
-- Token Claim (64.4M): To be distributed to all MARS token holders on Terra Classic as described [here](https://mars-protocol.medium.com/unveiling-the-mars-airdrop-and-snapshot-data-ea4f3926f2ca). These tokens will be fully unlocked and claimable upon genesis.
-- Community Pool (635.6M): To be distributed at the discretion of the community. Some of the use cases of this pool of funds could include incentivisation of staking/lending/borrowing, token grants and other community building programs.
-- Mars Contributors (300M): Subject to transferability restrictions for up to three years.
+- **Token Claim (64.4M)**: To be distributed to all MARS token holders on Terra Classic as described [here](https://mars-protocol.medium.com/unveiling-the-mars-airdrop-and-snapshot-data-ea4f3926f2ca). These tokens will be fully unlocked and claimable upon genesis.
+- **Community Pool (635.6M)**: To be distributed at the discretion of the community. Some of the use cases of this pool of funds could include incentivisation of staking/lending/borrowing, token grants and other community building programs.
+- **Mars Contributors (300M)**: Subject to transferability restrictions for up to three years.
 
 ## 7. Governance
 
@@ -473,4 +468,4 @@ Your rover awaits.
 
 **DISCLAIMER**
 
-Remember, Cosmos and Mars are experimental technologies. This whitepaper does not constitute investment advice and is subject to and limited by the [Mars disclaimers](https://mars-protocol.medium.com/mars-disclaimers-disclosures-f44cc7c54a33), which you should review before interacting with the protocol.
+*Remember, Cosmos and Mars are experimental technologies. This whitepaper does not constitute investment advice and is subject to and limited by the [Mars disclaimers](https://mars-protocol.medium.com/mars-disclaimers-disclosures-f44cc7c54a33), which you should review before interacting with the protocol.*
