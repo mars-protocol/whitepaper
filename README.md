@@ -418,8 +418,8 @@ Ultimately, however, compensation cannot be guaranteed and is subject to the dis
 
 The maximum supply of MARS tokens will be 1 billion and the final token allocation is as follows: 
 
-- **Token Claim (64.4M)**: To be distributed to all MARS token holders on Terra Classic as described [here](https://mars-protocol.medium.com/unveiling-the-mars-airdrop-and-snapshot-data-ea4f3926f2ca). These tokens will be fully unlocked and claimable upon genesis.
-- **Community Pool (635.6M)**: To be distributed at the discretion of the community. Some of the use cases of this pool of funds could include incentivisation of staking/lending/borrowing, token grants and other community building programs.
+- **Token Claim (~66.6M)**: To be distributed to all MARS token holders on Terra Classic as described [here](https://mars-protocol.medium.com/unveiling-the-mars-airdrop-and-snapshot-data-ea4f3926f2ca). These tokens will be fully unlocked and claimable upon genesis.
+- **Community Pool (~633.4M)**: To be distributed at the discretion of the community. Some of the use cases of this pool of funds could include incentivisation of staking/lending/borrowing, token grants and other community building programs.
 - **Mars Contributors (300M)**: Subject to transferability restrictions for up to three years.
 
 ## 7. Governance
